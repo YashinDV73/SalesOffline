@@ -1,0 +1,16 @@
+.m2/
+.repository/
+.build/
+
+/.idea/
+/.idea/*
+.idea/*
+**/.idea/*
+.metadata/*
+!.idea/copyright
+!.idea/runConfiguration
+**/*.iml
+
+target/
+.DS_Store/
+/target/
