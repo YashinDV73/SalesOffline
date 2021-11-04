@@ -1,11 +1,13 @@
 package ru.sales.offline.gui.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class TableModel {
-    protected final List<TableColumn> tableColumns = new ArrayList<TableColumn>();
+@NoArgsConstructor
+public abstract class TableModel {
+  private List<TableColumn> tableColumns;
+  private int columnSize;
 }

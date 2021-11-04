@@ -1,16 +1,44 @@
 package ru.sales.offline.gui.main;
 
-public class SpecificationTable extends SpecificationTableModel  {
+import javax.swing.JTable;
 
-    private static final Object[][] array =
-            new String[][] {{"1", "", "1", "0.0", "20", "Товар", "Полный расчёт", "0.0"}};
-    // Заголовки столбцов
-    private static final Object[] columnsHeader =
-            new String[] {"п.п.", "Наименование", "Количество", "Цена", "НДС", "ППР", "ПСР", "Сумма"};
+public class SpecificationTable extends JTable {
 
+  private static final SpecificationTableModel model = new SpecificationTableModel();
 
-    public SpecificationTable() {
-        setColumnIdentifiers(columnsHeader);
+  public SpecificationTable() {
+    setModel(model);
 
-    }
+    model
+        .getModel()
+        .getTableColumns()
+        .forEach(
+            tableColumn ->
+                getColumnModel()
+                    .getColumn(tableColumn.getId())
+                    .setPreferredWidth(tableColumn.getSize()));
+
+    //    // Слушатель событий модели столбцов таблицы
+    //    columnModel.addColumnModelListener(
+    //        new TableColumnModelListener() {
+    //
+    //          public void columnAdded(TableColumnModelEvent arg0) {
+    //            System.out.println("TableColumnModelListener.columnAdded()");
+    //          }
+    //
+    //          public void columnMarginChanged(ChangeEvent arg0) {
+    //            System.out.println("TableColumnModelListener.columnMarginChanged()");
+    //          }
+    //
+    //          public void columnMoved(TableColumnModelEvent arg0) {
+    //            System.out.println("TableColumnModelListener.columnMoved()");
+    //          }
+    //
+    //          public void columnRemoved(TableColumnModelEvent arg0) {}
+    //
+    //          public void columnSelectionChanged(ListSelectionEvent arg0) {
+    //            System.out.println("TableColumnModelListener.columnSelectionChanged()");
+    //          }
+    //        });
+  }
 }

@@ -1,11 +1,13 @@
 package ru.sales.offline.gui.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Value;
 
+@Value
 @Builder
 public class TableColumn {
-    private String name;
-    private int size;
-    private boolean editable;
+  int id;
+  String name;
+  int size;
+  boolean editable;
 }

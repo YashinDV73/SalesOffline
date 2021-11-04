@@ -15,6 +15,9 @@
         <lombok.version>1.18.22</lombok.version>
         <fmt-maven-plugin.version>2.6.0</fmt-maven-plugin.version>
         <slf4j.version>1.7.32</slf4j.version>
+        <miglayout-swing.version>4.2</miglayout-swing.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -44,7 +47,11 @@
             <artifactId>slf4j-simple</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout-swing</artifactId>
+            <version>${miglayout-swing.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

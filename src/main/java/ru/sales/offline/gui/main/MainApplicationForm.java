@@ -1,5 +1,6 @@
 package ru.sales.offline.gui.main;
 
+import net.miginfocom.swing.MigLayout;
 import ru.sales.offline.context.ApplicationContext;
 
 import java.awt.*;
@@ -20,18 +21,21 @@ public class MainApplicationForm extends JDialog {
     this.applicationContext = applicationContext;
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-    // Размещение таблиц в панели с блочным расположением
-    Box contents = new Box(BoxLayout.Y_AXIS);
-    contents.add(new JScrollPane(new JTable(new SpecificationTable())));
+      // При выходе из диалогового окна работа заканчивается
+      addWindowListener(
+              new WindowAdapter() {
+                  public void windowClosing(WindowEvent we) {
+                      dispose();
+                      System.exit(0);
+                  }
+              });
 
-    // При выходе из диалогового окна работа заканчивается
-    addWindowListener(
-        new WindowAdapter() {
-          public void windowClosing(WindowEvent we) {
-            dispose();
-            System.exit(0);
-          }
-        });
+
+      JPanel panel = new JPanel(new MigLayout());
+    panel.add(new JPanel());
+    panel.add(new JScrollPane(new SpecificationTable()));
+
+
 
     // Кнопка добавления колонки в модель TableColumnModel
     JButton add = new JButton("Добавить колонку");
@@ -60,11 +64,10 @@ public class MainApplicationForm extends JDialog {
     statusBar.add(lblEmployee);
 
     // Вывод окна на экран
-    getContentPane().add(contents);
-    getContentPane().add(pnlButtons, BorderLayout.SOUTH);
-    getContentPane().add(statusBar, BorderLayout.SOUTH);
-    setSize(480, 300);
-
+      panel.add(pnlButtons);
+      panel.add(statusBar);
+setContentPane(panel);
+      setSize(480, 300);
     setVisible(true);
   }
 }
