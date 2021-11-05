@@ -1,6 +1,7 @@
 package ru.sales.offline.gui.main;
 
 import lombok.Getter;
+import ru.sales.offline.context.ApplicationContext;
 import ru.sales.offline.gui.model.TableColumn;
 import ru.sales.offline.gui.model.TableModel;
 
@@ -9,6 +10,13 @@ import javax.swing.table.DefaultTableModel;
 public class SpecificationTableModel extends DefaultTableModel {
 
   @Getter private final TableModel model = new MainTableModel();
+
+  private ApplicationContext applicationContext;
+
+  public SpecificationTableModel(ApplicationContext applicationContext) {
+
+    this.applicationContext = applicationContext;
+  }
 
   @Override
   public Class<?> getColumnClass(int column) {

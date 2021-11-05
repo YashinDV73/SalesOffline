@@ -1,13 +1,13 @@
 package ru.sales.offline.dto.receipt;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Value;
 
 import java.util.List;
 
-@Data
+@Value
 @AllArgsConstructor
 public class Specification {
 
-  private final List<Position> positionList;
+  List<Position> positionList;
 }

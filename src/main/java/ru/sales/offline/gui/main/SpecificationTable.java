@@ -1,13 +1,17 @@
 package ru.sales.offline.gui.main;
 
+import ru.sales.offline.context.ApplicationContext;
+
 import javax.swing.JTable;
+import java.awt.*;
 
-public class SpecificationTable extends JTable {
+public class SpecificationTable<T> extends JTable {
 
-  private static final SpecificationTableModel model = new SpecificationTableModel();
+  public SpecificationTable(ApplicationContext applicationContext) {
+    final SpecificationTableModel model = new SpecificationTableModel(applicationContext);
 
-  public SpecificationTable() {
     setModel(model);
+    getTableHeader().setReorderingAllowed(false);
 
     model
         .getModel()
@@ -17,6 +21,8 @@ public class SpecificationTable extends JTable {
                 getColumnModel()
                     .getColumn(tableColumn.getId())
                     .setPreferredWidth(tableColumn.getSize()));
+
+    setPreferredSize(new Dimension(1000, 370));
 
     //    // Слушатель событий модели столбцов таблицы
     //    columnModel.addColumnModelListener(

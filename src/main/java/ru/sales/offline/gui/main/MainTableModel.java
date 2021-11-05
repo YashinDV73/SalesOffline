@@ -23,7 +23,7 @@ public final class MainTableModel extends TableModel {
     tableColumns.add(
         TableColumn.builder().id(COLUMN_SERIAL_NUMBER).name("№").size(100).editable(false).build());
     tableColumns.add(
-        TableColumn.builder().id(COLUMN_NAME).name("Название").size(300).editable(true).build());
+        TableColumn.builder().id(COLUMN_NAME).name("Название").size(500).editable(true).build());
     tableColumns.add(
         TableColumn.builder().id(COLUMN_QTY).name("Кол-во").size(100).editable(true).build());
     tableColumns.add(
