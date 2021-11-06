@@ -47,12 +47,17 @@ public class MainInfoPanel extends JPanel {
     add(buttonPanel);
 
     addPosition.addActionListener(
-        e -> {
-          addNewPosition(e.getSource());
-        });
+        e -> addNewPositionAction(e.getSource()));
+
+    clearSpecification.addActionListener(
+            e -> clearSpecificationAction(e.getSource()));
   }
 
-  private void addNewPosition(Object e) {
+  private void clearSpecificationAction(Object source) {
+
+  }
+
+  private void addNewPositionAction(Object e) {
     table.addNewPosition();
   }
 
