@@ -2,7 +2,6 @@ package ru.sales.offline.dto.receipt.types;
 
 import javafx.util.Pair;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  * 1212 признак предмета расчета - признак предмета товара, работы, услуги, платежа, выплаты, иного

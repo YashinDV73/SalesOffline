@@ -2,7 +2,6 @@ package ru.sales.offline.dto.receipt.types;
 
 import javafx.util.Pair;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
 public enum ReceiptCalculationType implements ComboType {
