@@ -5,10 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-public enum ReceiptCalculationType {
+public enum ReceiptCalculationType implements ComboType {
   INCOME(new Pair<>(1, "приход")),
   INCOME_RETURN(new Pair<>(2, "возврат прихода")),
   SPENDING(new Pair<>(3, "расход")),
   SPENDING_RETURN(new Pair<>(4, "возврат расхода"));
-  @Getter private final Pair<Integer, String> value;
+
+  private Pair<Integer, String> value;
+
+  @Override
+  public Pair<Integer, String> value() {
+    return value;
+  }
 }

@@ -9,10 +9,15 @@ import lombok.Getter;
  * предмета расчета
  */
 @AllArgsConstructor
-public enum ObjectCalculationType {
+public enum ObjectCalculationType implements ComboType {
   GOODS(new Pair<Integer, String>(1, "Товар")),
   SERVICE(new Pair<Integer, String>(4, "Услуга")),
   PAYMENT(new Pair<Integer, String>(10, "Платеж/Выплата"));
 
-  @Getter private final Pair<Integer, String> value;
+  private Pair<Integer, String> value;
+
+  @Override
+  public Pair<Integer, String> value() {
+    return value;
+  }
 }

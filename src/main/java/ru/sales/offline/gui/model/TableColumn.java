@@ -5,9 +5,12 @@ import lombok.Value;
 
 @Value
 @Builder
-public class TableColumn {
+public class TableColumn<T> {
   int id;
   String name;
   int size;
   boolean editable;
+  T defaultValue;
+  Class<T> aClass;
+  T[] columnData;
 }
