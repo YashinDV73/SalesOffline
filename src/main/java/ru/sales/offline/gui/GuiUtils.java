@@ -7,6 +7,7 @@ import java.text.NumberFormat;
 
 public final class GuiUtils {
   public static final NumberFormat FORMATTER_CURRENCY = NumberFormat.getCurrencyInstance();
+
   public static void changeFont(Component component, Font font) {
     component.setFont(font);
     if (component instanceof Container) {

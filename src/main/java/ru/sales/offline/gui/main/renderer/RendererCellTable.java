@@ -6,10 +6,8 @@ import ru.sales.offline.gui.GuiUtils;
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
-import java.text.NumberFormat;
 
 public class RendererCellTable extends JLabel implements TableCellRenderer {
-
 
   @Override
   public Component getTableCellRendererComponent(

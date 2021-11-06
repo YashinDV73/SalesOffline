@@ -80,4 +80,8 @@ public class SpecificationTable<T> extends JTable {
     //          }
     //        });
   }
+
+  public void addNewPosition() {
+    ((SpecificationTableModel) getModel()).addPosition();
+  }
 }

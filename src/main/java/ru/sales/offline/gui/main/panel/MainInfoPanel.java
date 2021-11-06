@@ -2,13 +2,17 @@ package ru.sales.offline.gui.main.panel;
 
 import lombok.var;
 import net.miginfocom.swing.MigLayout;
+import ru.sales.offline.gui.main.SpecificationTable;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainInfoPanel extends JPanel {
 
-  public MainInfoPanel(JLabel jLabelSum) {
+  private SpecificationTable table;
+
+  public MainInfoPanel(JLabel jLabelSum, SpecificationTable table) {
+    this.table = table;
 
     setLayout(new MigLayout("debug, fillx", "[grow, right]"));
 
@@ -41,10 +45,20 @@ public class MainInfoPanel extends JPanel {
     buttonPanel.add(move);
 
     add(buttonPanel);
+
+    addPosition.addActionListener(
+        e -> {
+          addNewPosition(e.getSource());
+        });
   }
+
+  private void addNewPosition(Object e) {
+    table.addNewPosition();
+  }
+
   private JPanel sep() {
     var j = new JPanel();
-    j.setSize(new Dimension(5 0, 20));
+    j.setSize(new Dimension(50, 20));
     return j;
   }
 }

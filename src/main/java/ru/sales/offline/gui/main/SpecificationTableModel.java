@@ -2,6 +2,7 @@ package ru.sales.offline.gui.main;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import ru.sales.offline.context.ApplicationContext;
 import ru.sales.offline.gui.GuiUtils;
 import ru.sales.offline.gui.model.TableColumn;
@@ -21,14 +22,7 @@ public class SpecificationTableModel extends DefaultTableModel {
   public SpecificationTableModel(ApplicationContext applicationContext) {
 
     this.applicationContext = applicationContext;
-    insertRow(
-        0,
-        model
-            .getTableColumns()
-            .stream()
-            .sorted(Comparator.comparingInt(TableColumn::getId))
-            .map(TableColumn::getDefaultValue)
-            .toArray());
+    addPosition();
 
     addTableModelListener(
         e -> {
@@ -38,12 +32,11 @@ public class SpecificationTableModel extends DefaultTableModel {
   }
 
   private void recalcSum() {
-      BigDecimal sum = new BigDecimal(0);
-      for (int i=0; i < getRowCount() ;i++){
-          sum = sum.add(BigDecimal.valueOf((Double)getValueAt(i, 7)));
-      }
+    BigDecimal sum = new BigDecimal(0);
+    for (int i = 0; i < getRowCount(); i++) {
+      sum = sum.add(BigDecimal.valueOf((Double) getValueAt(i, 7)));
+    }
     applicationContext.getLabelSum().setText(GuiUtils.FORMATTER_CURRENCY.format(sum));
-    // applicationContext.getLabelSum().repaint();
   }
 
   //    @Override
@@ -105,5 +98,20 @@ public class SpecificationTableModel extends DefaultTableModel {
         .map(TableColumn::isEditable)
         .findFirst()
         .orElse(false);
+  }
+
+  public void addPosition() {
+
+    var array =
+        model
+            .getTableColumns()
+            .stream()
+            .sorted(Comparator.comparingInt(TableColumn::getId))
+            .map(TableColumn::getDefaultValue)
+            .toArray();
+
+    array[0] = getRowCount() + 1;
+
+    insertRow(getRowCount(), array);
   }
 }
