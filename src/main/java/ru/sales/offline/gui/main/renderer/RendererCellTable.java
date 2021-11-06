@@ -1,6 +1,7 @@
 package ru.sales.offline.gui.main.renderer;
 
 import ru.sales.offline.dto.receipt.types.ComboType;
+import ru.sales.offline.gui.GuiUtils;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
@@ -9,7 +10,6 @@ import java.text.NumberFormat;
 
 public class RendererCellTable extends JLabel implements TableCellRenderer {
 
-  private static final NumberFormat FORMATTER = NumberFormat.getCurrencyInstance();
 
   @Override
   public Component getTableCellRendererComponent(
@@ -18,7 +18,7 @@ public class RendererCellTable extends JLabel implements TableCellRenderer {
       setText(((ComboType) value).value().getValue());
     }
     if (value instanceof Double) {
-      setText(FORMATTER.format(value));
+      setText(GuiUtils.FORMATTER_CURRENCY.format(value));
     }
     if (value instanceof String) {
       setText(String.valueOf(value));

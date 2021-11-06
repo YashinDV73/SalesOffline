@@ -52,7 +52,7 @@ public class MainApplicationForm extends JDialog {
     statusBar.add(lblEmployee);
 
     // Вывод окна на экран
-    panel.add(new MainInfoPanel(), "right, wrap");
+    panel.add(new MainInfoPanel(applicationContext.getLabelSum()), "right, wrap");
     panel.add(statusBar);
     setContentPane(panel);
     setSize(1024, 768);

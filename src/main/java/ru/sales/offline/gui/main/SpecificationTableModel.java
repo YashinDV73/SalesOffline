@@ -3,10 +3,12 @@ package ru.sales.offline.gui.main;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import ru.sales.offline.context.ApplicationContext;
+import ru.sales.offline.gui.GuiUtils;
 import ru.sales.offline.gui.model.TableColumn;
 import ru.sales.offline.gui.model.TableModel;
 
 import javax.swing.table.DefaultTableModel;
+import java.math.BigDecimal;
 import java.util.Comparator;
 
 @Slf4j
@@ -27,6 +29,21 @@ public class SpecificationTableModel extends DefaultTableModel {
             .sorted(Comparator.comparingInt(TableColumn::getId))
             .map(TableColumn::getDefaultValue)
             .toArray());
+
+    addTableModelListener(
+        e -> {
+          log.info("addTableModelListener: {}", e.getSource());
+          recalcSum();
+        });
+  }
+
+  private void recalcSum() {
+      BigDecimal sum = new BigDecimal(0);
+      for (int i=0; i < getRowCount() ;i++){
+          sum = sum.add(BigDecimal.valueOf((Double)getValueAt(i, 7)));
+      }
+    applicationContext.getLabelSum().setText(GuiUtils.FORMATTER_CURRENCY.format(sum));
+    // applicationContext.getLabelSum().repaint();
   }
 
   //    @Override
@@ -50,6 +67,8 @@ public class SpecificationTableModel extends DefaultTableModel {
   @Override
   public Class<?> getColumnClass(int column) {
     switch (column) {
+      case 2:
+        return Integer.class;
       case 3:
       case 7:
         return Double.class;
@@ -60,6 +79,14 @@ public class SpecificationTableModel extends DefaultTableModel {
 
   @Override
   public void setValueAt(Object aValue, int row, int column) {
+    switch (column) {
+      case 2:
+        setValueAt((Integer) aValue * (Double) getValueAt(row, 3), row, 7);
+        break;
+      case 3:
+        setValueAt((Double) aValue * (Integer) getValueAt(row, 2), row, 7);
+        break;
+    }
     super.setValueAt(aValue, row, column);
     log.info("setValueAt: {}, {}, {}", aValue, row, column);
   }
