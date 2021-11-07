@@ -18,12 +18,8 @@ public class MainApplicationForm extends JDialog {
   protected static final ColorUIResource COLOR_UI_RESOURCE =
       new ColorUIResource(Color.decode("#BACCFF"));
 
-  // Данные для таблиц
-  private ApplicationContext applicationContext;
-
   public MainApplicationForm(ApplicationContext applicationContext) {
     super((Dialog) null, "Sales offline", true);
-    this.applicationContext = applicationContext;
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     setResizable(false);
     setBackground(COLOR_UI_RESOURCE);
@@ -59,6 +55,7 @@ public class MainApplicationForm extends JDialog {
     setContentPane(panel);
     setSize(1024, 768);
     GuiUtils.changeFont(this, new Font("Arial", 0, 18));
+    pack();
     setVisible(true);
   }
 }

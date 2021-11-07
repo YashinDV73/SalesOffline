@@ -1,9 +1,16 @@
 package ru.sales.offline.gui.main;
 
 import lombok.Getter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import org.codehaus.jackson.map.ObjectMapper;
 import ru.sales.offline.context.ApplicationContext;
+import ru.sales.offline.dto.receipt.Position;
+import ru.sales.offline.dto.receipt.Specification;
+import ru.sales.offline.dto.receipt.types.MethodCalculationType;
+import ru.sales.offline.dto.receipt.types.NdsType;
+import ru.sales.offline.dto.receipt.types.ObjectCalculationType;
 import ru.sales.offline.gui.GuiUtils;
 import ru.sales.offline.gui.model.TableColumn;
 import ru.sales.offline.gui.model.TableModel;
@@ -18,10 +25,13 @@ public class SpecificationTableModel extends DefaultTableModel {
   @Getter private final TableModel model = new MainTableModel();
 
   private ApplicationContext applicationContext;
+  private Specification specification;
 
   public SpecificationTableModel(ApplicationContext applicationContext) {
 
     this.applicationContext = applicationContext;
+    specification = this.applicationContext.getReceipt().getSpecification();
+
     addPosition();
 
     addTableModelListener(
@@ -34,17 +44,10 @@ public class SpecificationTableModel extends DefaultTableModel {
   private void recalcSum() {
     BigDecimal sum = new BigDecimal(0);
     for (int i = 0; i < getRowCount(); i++) {
-      sum = sum.add(BigDecimal.valueOf((Double) getValueAt(i, 7)));
+      sum = sum.add(BigDecimal.valueOf((Double) getValueAt(i, MainTableModel.COLUMN_SUM)));
     }
     applicationContext.getLabelSum().setText(GuiUtils.FORMATTER_CURRENCY.format(sum));
   }
-
-  //    @Override
-  //    public Object getValueAt(int rowIndex, int columnIndex) {
-  //        return model.getTableColumns().stream()
-  //                .filter(tableColumn -> tableColumn.getId()==columnIndex)
-  //                .map(TableColumn::getDefaultValue);
-  //    }
 
   @Override
   public String getColumnName(int column) {
@@ -60,10 +63,10 @@ public class SpecificationTableModel extends DefaultTableModel {
   @Override
   public Class<?> getColumnClass(int column) {
     switch (column) {
-      case 2:
+      case MainTableModel.COLUMN_QTY:
         return Integer.class;
-      case 3:
-      case 7:
+      case MainTableModel.COLUMN_COST:
+      case MainTableModel.COLUMN_SUM:
         return Double.class;
       default:
         return Object.class;
@@ -71,17 +74,50 @@ public class SpecificationTableModel extends DefaultTableModel {
   }
 
   @Override
+  @SneakyThrows
   public void setValueAt(Object aValue, int row, int column) {
+    if (aValue == null) {
+      super.setValueAt(aValue, row, column);
+      log.error("Попытка вставить в таблицу NULL! строка: {} колонка: {}", row, column);
+    }
     switch (column) {
-      case 2:
-        setValueAt((Integer) aValue * (Double) getValueAt(row, 3), row, 7);
+      case MainTableModel.COLUMN_NAME:
+        updateSpecification(row).setName(String.valueOf(aValue));
         break;
-      case 3:
-        setValueAt((Double) aValue * (Integer) getValueAt(row, 2), row, 7);
+      case MainTableModel.COLUMN_QTY:
+        updateSpecification(row).setQty((Integer) aValue);
+        setValueAt((Integer) aValue * (Double) getValueAt(row, MainTableModel.COLUMN_COST), row, MainTableModel.COLUMN_SUM);
+        break;
+      case MainTableModel.COLUMN_COST:
+        updateSpecification(row).setCost((Double) aValue);
+        setValueAt((Double) aValue * (Integer) getValueAt(row, MainTableModel.COLUMN_QTY), row, MainTableModel.COLUMN_SUM);
+        break;
+      case MainTableModel.COLUMN_NDS:
+        updateSpecification(row).setNds((NdsType) aValue);
+        break;
+      case MainTableModel.COLUMN_OBJECT_CALC:
+        updateSpecification(row).setSignObjectCalculation((ObjectCalculationType) aValue);
+        break;
+      case MainTableModel.COLUMN_METHOD_CALC:
+        updateSpecification(row).setSignMethodCalculation((MethodCalculationType) aValue);
         break;
     }
     super.setValueAt(aValue, row, column);
     log.info("setValueAt: {}, {}, {}", aValue, row, column);
+    log.info("specification: {}", new ObjectMapper().writeValueAsString(specification));
+  }
+
+  private Position updateSpecification(int row) {
+    return specification
+        .getPositionList()
+        .stream()
+        .filter(position -> position.getId().equals(row))
+        .findFirst()
+        .orElse(addPositionToSpecification());
+  }
+
+  private Position addPositionToSpecification() {
+    return null;
   }
 
   @Override
@@ -110,8 +146,28 @@ public class SpecificationTableModel extends DefaultTableModel {
             .map(TableColumn::getDefaultValue)
             .toArray();
 
-    array[0] = getRowCount() + 1;
+    int rowCount = getRowCount();
 
-    insertRow(getRowCount(), array);
+    array[0] = rowCount + 1;
+
+    specification
+        .getPositionList()
+        .add(
+            new Position(
+                rowCount,
+                "",
+                1,
+                0d,
+                NdsType.NDS_20,
+                ObjectCalculationType.GOODS,
+                MethodCalculationType.FULL_SETTLEMENT));
+
+    insertRow(rowCount, array);
+  }
+
+  public void clearSpecification() {
+    specification.getPositionList().clear();
+    setRowCount(0);
+    addPosition();
   }
 }

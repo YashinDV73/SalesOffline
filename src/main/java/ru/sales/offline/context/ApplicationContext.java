@@ -15,5 +15,4 @@ public class ApplicationContext {
   Header receipt;
   JLabel labelSum = new JLabel("0.00");
   SpecificationTable mainTable;
-
 }

@@ -2,6 +2,7 @@ package ru.sales.offline.gui.main.renderer;
 
 import ru.sales.offline.dto.receipt.types.ComboType;
 import ru.sales.offline.gui.GuiUtils;
+import ru.sales.offline.gui.main.MainTableModel;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
@@ -25,15 +26,27 @@ public class RendererCellTable extends JLabel implements TableCellRenderer {
       setText(String.valueOf(value));
     }
     switch (column) {
-      case 0:
-      case 2:
-      case 4:
-      case 5:
-      case 6:
+      case MainTableModel.COLUMN_NAME:
+      case MainTableModel.COLUMN_QTY:
+      case MainTableModel.COLUMN_COST:
+        if (isSelected) {
+          setBackground(Color.lightGray);
+          setOpaque(true);
+        } else {
+          setBackground(Color.WHITE);
+          setOpaque(false);
+        }
+    }
+    switch (column) {
+      case MainTableModel.COLUMN_SERIAL_NUMBER:
+      case MainTableModel.COLUMN_QTY:
+      case MainTableModel.COLUMN_NDS:
+      case MainTableModel.COLUMN_OBJECT_CALC:
+      case MainTableModel.COLUMN_METHOD_CALC:
         setHorizontalAlignment(JLabel.CENTER);
         break;
-      case 3:
-      case 7:
+      case MainTableModel.COLUMN_COST:
+      case MainTableModel.COLUMN_SUM:
         setHorizontalAlignment(JLabel.RIGHT);
         break;
     }

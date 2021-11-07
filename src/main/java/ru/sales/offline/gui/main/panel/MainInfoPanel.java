@@ -3,7 +3,6 @@ package ru.sales.offline.gui.main.panel;
 import lombok.var;
 import net.miginfocom.swing.MigLayout;
 import ru.sales.offline.context.ApplicationContext;
-import ru.sales.offline.gui.main.SpecificationTable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -47,22 +46,17 @@ public class MainInfoPanel extends JPanel {
 
     add(buttonPanel);
 
-    addPosition.addActionListener(
-        e -> addNewPositionAction(e.getSource()));
+    addPosition.addActionListener(e -> addNewPositionAction(e.getSource()));
 
-    clearSpecification.addActionListener(
-            e -> clearSpecificationAction(e.getSource()));
+    clearSpecification.addActionListener(e -> clearSpecificationAction(e.getSource()));
 
-    printReceipt.addActionListener(
-            e -> printReceipt(applicationContext));
+    printReceipt.addActionListener(e -> printReceipt(applicationContext));
   }
 
-  private void printReceipt(ApplicationContext applicationContext) {
-
-  }
+  private void printReceipt(ApplicationContext applicationContext) {}
 
   private void clearSpecificationAction(Object source) {
-
+    applicationContext.getMainTable().clearSpecification();
   }
 
   private void addNewPositionAction(Object e) {

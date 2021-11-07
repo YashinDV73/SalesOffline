@@ -11,14 +11,14 @@ import java.util.List;
 
 public final class MainTableModel extends TableModel {
 
-  private static final int COLUMN_SERIAL_NUMBER = 0;
-  private static final int COLUMN_NAME = 1;
-  private static final int COLUMN_QTY = 2;
-  private static final int COLUMN_COST = 3;
-  private static final int COLUMN_NDS = 4;
-  private static final int COLUMN_OBJECT_CALC = 5;
-  private static final int COLUMN_METHOD_CALC = 6;
-  private static final int COLUMN_SUM = 7;
+  public static final int COLUMN_SERIAL_NUMBER = 0;
+  public static final int COLUMN_NAME = 1;
+  public static final int COLUMN_QTY = 2;
+  public static final int COLUMN_COST = 3;
+  public static final int COLUMN_NDS = 4;
+  public static final int COLUMN_OBJECT_CALC = 5;
+  public static final int COLUMN_METHOD_CALC = 6;
+  public static final int COLUMN_SUM = 7;
 
   private static final List<TableColumn> tableColumns = new ArrayList<>();
 

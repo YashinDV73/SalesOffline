@@ -7,6 +7,8 @@ import ru.sales.offline.gui.main.renderer.RendererComboBox;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.util.Objects;
 
 @Slf4j
@@ -17,7 +19,7 @@ public class SpecificationTable extends JTable {
 
     setModel(model);
     getTableHeader().setReorderingAllowed(false);
-
+    setCellSelectionEnabled(true);
     model
         .getModel()
         .getTableColumns()
@@ -53,35 +55,32 @@ public class SpecificationTable extends JTable {
                   "Data column {}: {}", tableColumn.getId(), tableColumn.getAClass().getName());
             });
 
+    setCellEditor(new SelectAllCellEditor(new JTextField()));
+
     setRowHeight(30);
 
-    setPreferredSize(new Dimension(1000, 370));
+    setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-    //    // Слушатель событий модели столбцов таблицы
-    //    columnModel.addColumnModelListener(
-    //        new TableColumnModelListener() {
-    //
-    //          public void columnAdded(TableColumnModelEvent arg0) {
-    //            System.out.println("TableColumnModelListener.columnAdded()");
-    //          }
-    //
-    //          public void columnMarginChanged(ChangeEvent arg0) {
-    //            System.out.println("TableColumnModelListener.columnMarginChanged()");
-    //          }
-    //
-    //          public void columnMoved(TableColumnModelEvent arg0) {
-    //            System.out.println("TableColumnModelListener.columnMoved()");
-    //          }
-    //
-    //          public void columnRemoved(TableColumnModelEvent arg0) {}
-    //
-    //          public void columnSelectionChanged(ListSelectionEvent arg0) {
-    //            System.out.println("TableColumnModelListener.columnSelectionChanged()");
-    //          }
-    //        });
+    setPreferredSize(new Dimension(1000, 370));
   }
 
   public void addNewPosition() {
     ((SpecificationTableModel) getModel()).addPosition();
+  }
+
+  public void clearSpecification() {
+    ((SpecificationTableModel) getModel()).clearSpecification();
+  }
+
+  public static class SelectAllCellEditor extends DefaultCellEditor {
+    public SelectAllCellEditor(final JTextField textField) {
+      super(textField);
+      textField.addFocusListener(
+          new FocusAdapter() {
+            public void focusGained(final FocusEvent e) {
+              textField.selectAll();
+            }
+          });
+    }
   }
 }
