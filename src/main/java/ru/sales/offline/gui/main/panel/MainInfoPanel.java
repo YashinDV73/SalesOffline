@@ -2,6 +2,7 @@ package ru.sales.offline.gui.main.panel;
 
 import lombok.var;
 import net.miginfocom.swing.MigLayout;
+import ru.sales.offline.context.ApplicationContext;
 import ru.sales.offline.gui.main.SpecificationTable;
 
 import javax.swing.*;
@@ -9,16 +10,16 @@ import java.awt.*;
 
 public class MainInfoPanel extends JPanel {
 
-  private SpecificationTable table;
+  private ApplicationContext applicationContext;
 
-  public MainInfoPanel(JLabel jLabelSum, SpecificationTable table) {
-    this.table = table;
+  public MainInfoPanel(ApplicationContext applicationContext) {
+    this.applicationContext = applicationContext;
 
     setLayout(new MigLayout("debug, fillx", "[grow, right]"));
 
     JPanel sumInfoPanel = new JPanel();
     sumInfoPanel.add(new JLabel("Сумма к оплате наличными: "));
-    sumInfoPanel.add(jLabelSum);
+    sumInfoPanel.add(applicationContext.getLabelSum());
     add(sumInfoPanel, "wrap");
 
     JPanel buttonPanel = new JPanel();
@@ -34,15 +35,15 @@ public class MainInfoPanel extends JPanel {
     clearSpecification.setAlignmentX(Component.RIGHT_ALIGNMENT);
     clearSpecification.addActionListener(e -> {});
 
-    JButton move = new JButton("Оформить чек");
-    move.setAlignmentX(Component.RIGHT_ALIGNMENT);
-    move.addActionListener(e -> {});
+    JButton printReceipt = new JButton("Оформить чек");
+    printReceipt.setAlignmentX(Component.RIGHT_ALIGNMENT);
+    printReceipt.addActionListener(e -> {});
 
     buttonPanel.add(addPosition);
     buttonPanel.add(delPosition);
     buttonPanel.add(sep());
     buttonPanel.add(clearSpecification);
-    buttonPanel.add(move);
+    buttonPanel.add(printReceipt);
 
     add(buttonPanel);
 
@@ -51,6 +52,13 @@ public class MainInfoPanel extends JPanel {
 
     clearSpecification.addActionListener(
             e -> clearSpecificationAction(e.getSource()));
+
+    printReceipt.addActionListener(
+            e -> printReceipt(applicationContext));
+  }
+
+  private void printReceipt(ApplicationContext applicationContext) {
+
   }
 
   private void clearSpecificationAction(Object source) {
@@ -58,7 +66,7 @@ public class MainInfoPanel extends JPanel {
   }
 
   private void addNewPositionAction(Object e) {
-    table.addNewPosition();
+    applicationContext.getMainTable().addNewPosition();
   }
 
   private JPanel sep() {

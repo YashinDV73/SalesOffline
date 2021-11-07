@@ -42,6 +42,7 @@ public class MainApplicationForm extends JDialog {
     panel.add(new MainTopPanel(), "wrap");
 
     SpecificationTable table = new SpecificationTable(applicationContext);
+    applicationContext.setMainTable(table);
     JScrollPane scrollPane = new JScrollPane(table);
     scrollPane.setPreferredSize(new Dimension(1000, 400));
     scrollPane.setBackground(COLOR_UI_RESOURCE);
@@ -53,7 +54,7 @@ public class MainApplicationForm extends JDialog {
     statusBar.add(lblEmployee);
 
     // Вывод окна на экран
-    panel.add(new MainInfoPanel(applicationContext.getLabelSum(), table), "right, wrap");
+    panel.add(new MainInfoPanel(applicationContext), "right, wrap");
     panel.add(statusBar);
     setContentPane(panel);
     setSize(1024, 768);

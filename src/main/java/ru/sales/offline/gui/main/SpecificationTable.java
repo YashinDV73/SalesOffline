@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.Objects;
 
 @Slf4j
-public class SpecificationTable<T> extends JTable {
+public class SpecificationTable extends JTable {
 
   public SpecificationTable(ApplicationContext applicationContext) {
     final SpecificationTableModel model = new SpecificationTableModel(applicationContext);
