@@ -2,8 +2,11 @@ package ru.sales.offline.gui.utils;
 
 // Набор методов
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JTextField;
+import java.awt.Dimension;
+import java.awt.Insets;
 
 public class GUITools {
   /**

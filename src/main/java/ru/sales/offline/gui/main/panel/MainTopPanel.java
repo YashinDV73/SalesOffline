@@ -4,8 +4,10 @@ import lombok.var;
 import ru.sales.offline.dto.receipt.types.ReceiptCalculationType;
 import ru.sales.offline.gui.main.renderer.RendererComboBox;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.text.DateFormat;
 import java.util.Date;
 

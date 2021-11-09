@@ -4,11 +4,14 @@ import ru.sales.offline.dto.receipt.types.ComboType;
 import ru.sales.offline.gui.GuiUtils;
 import ru.sales.offline.gui.main.MainTableModel;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
 
-public class RendererCellTable extends JLabel implements TableCellRenderer {
+public class RendererCellTable extends DefaultTableCellRenderer implements TableCellRenderer {
 
   @Override
   public Component getTableCellRendererComponent(

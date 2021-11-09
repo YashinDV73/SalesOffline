@@ -6,11 +6,18 @@ import ru.sales.offline.gui.GuiUtils;
 import ru.sales.offline.gui.main.panel.MainInfoPanel;
 import ru.sales.offline.gui.main.panel.MainTopPanel;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dialog;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.*;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.plaf.ColorUIResource;
 
 public class MainApplicationForm extends JDialog {
@@ -57,7 +64,16 @@ public class MainApplicationForm extends JDialog {
     setSize(1024, 768);
     GuiUtils.changeFont(this, new Font("Arial", 0, 18));
     applicationContext.setParent(this);
+    centerScreenOn();
     pack();
     setVisible(true);
+  }
+
+  private void centerScreenOn() {
+    final Toolkit toolkit = Toolkit.getDefaultToolkit();
+    final Dimension screenSize = toolkit.getScreenSize();
+    final int x = (screenSize.width - getWidth()) / 2;
+    final int y = (screenSize.height - getHeight()) / 2;
+    setLocation(x, y);
   }
 }

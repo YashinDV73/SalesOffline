@@ -1,7 +1,9 @@
 package ru.sales.offline.gui.utils;
 
 // Класс для работы с менеджером расположением
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 public class BoxLayoutUtils {
   // Выравнивание компонентов по оси X для группы компонентов

@@ -7,8 +7,11 @@ import ru.sales.offline.bussines.ReceiptTransaction;
 import ru.sales.offline.bussines.fiscal.PrintAndSaveReceipt;
 import ru.sales.offline.context.ApplicationContext;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.Component;
+import java.awt.Dimension;
 
 public class MainInfoPanel extends JPanel {
 
@@ -39,9 +42,9 @@ public class MainInfoPanel extends JPanel {
     printReceipt.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
     buttonPanel.add(addPosition);
-    buttonPanel.add(delPosition);
-    buttonPanel.add(sep());
+    // buttonPanel.add(delPosition);
     buttonPanel.add(clearSpecification);
+    buttonPanel.add(sep());
     buttonPanel.add(printReceipt);
 
     add(buttonPanel);

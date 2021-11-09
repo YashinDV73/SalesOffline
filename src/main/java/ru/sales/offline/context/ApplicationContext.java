@@ -8,8 +8,8 @@ import ru.sales.offline.dto.receipt.types.ReceiptCalculationType;
 import ru.sales.offline.gui.main.SpecificationTable;
 import ru.sales.offline.gui.main.renderer.RendererComboBox;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JLabel;
+import java.awt.Component;
 import java.util.Properties;
 
 @Data

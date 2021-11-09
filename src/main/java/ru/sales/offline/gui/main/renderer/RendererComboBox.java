@@ -2,8 +2,10 @@ package ru.sales.offline.gui.main.renderer;
 
 import ru.sales.offline.dto.receipt.types.ComboType;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JComboBox;
+import javax.swing.JList;
+import java.awt.Component;
 
 public class RendererComboBox<T> extends JComboBox<T> {
 

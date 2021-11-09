@@ -54,15 +54,13 @@ public class Atol77F {
 
   public boolean printReceipt(String cashier, Header receipt) {
 
-    checkOpenShift();
+    checkOpenShift(cashier);
 
-    logger.info("Формирование чека");
+    logger.info("Формирование чека {}", receipt.getType().value());
 
-    fptr.setParam(1021, cashier);
-    fptr.setParam(1203, "");
-    fptr.operatorLogin();
+    cashierRegistered(cashier);
 
-    fptr.setParam(IFptr.LIBFPTR_PARAM_RECEIPT_TYPE, IFptr.LIBFPTR_RT_SELL);
+    fptr.setParam(IFptr.LIBFPTR_PARAM_RECEIPT_TYPE, receipt.getType().value().getKey());
     if (fptr.openReceipt() != 0) {
       logger.error("Ошибка во время печати чека: {}", fptr.errorDescription());
     }
@@ -86,7 +84,13 @@ public class Atol77F {
     return true;
   }
 
-  private void checkOpenShift() {
+  private void cashierRegistered(String cashier) {
+    fptr.setParam(1021, cashier);
+    fptr.setParam(1203, ""); // TODO: INN???
+    fptr.operatorLogin();
+  }
+
+  private void checkOpenShift(String cashier) {
 
     logger.info("Проверка состояния текущей смены");
     fptr.setParam(IFptr.LIBFPTR_PARAM_DATA_TYPE, IFptr.LIBFPTR_DT_SHIFT_STATE);
@@ -98,9 +102,7 @@ public class Atol77F {
     if (state == IFptr.LIBFPTR_SS_EXPIRED) {
       logger.warn("Текущая смена {} истекла", number);
 
-      fptr.setParam(1021, "Кассир Иванов И.");
-      fptr.setParam(1203, "123456789047");
-      fptr.operatorLogin();
+      cashierRegistered(cashier);
 
       if (checkDocumentClosed(
           () -> {
@@ -115,6 +117,12 @@ public class Atol77F {
     }
   }
 
+  /**
+   * ресурс https://integration.atol.ru/api/?java#proverit-zakrytie-dokumenta
+   *
+   * @param actionReport фискальная опреация
+   * @return true - если все ОК
+   */
   private boolean checkDocumentClosed(Supplier<Boolean> actionReport) {
     if (!actionReport.get()) {
       logger.error("Ошибка формирования документа: {}", fptr.errorDescription());

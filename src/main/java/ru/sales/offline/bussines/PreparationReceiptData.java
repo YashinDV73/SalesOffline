@@ -8,7 +8,8 @@ import ru.sales.offline.SalesOfflineApplication;
 import ru.sales.offline.context.ApplicationContext;
 import ru.sales.offline.dto.receipt.types.ReceiptCalculationType;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.util.List;
 

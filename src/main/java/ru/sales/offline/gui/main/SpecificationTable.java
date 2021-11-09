@@ -7,8 +7,11 @@ import ru.sales.offline.context.ApplicationContext;
 import ru.sales.offline.gui.main.renderer.RendererCellTable;
 import ru.sales.offline.gui.main.renderer.RendererComboBox;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import java.awt.Dimension;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.Objects;
