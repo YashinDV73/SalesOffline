@@ -9,9 +9,9 @@ import lombok.AllArgsConstructor;
  */
 @AllArgsConstructor
 public enum ObjectCalculationType implements ComboType {
-  GOODS(new Pair<Integer, String>(1, "Товар")),
-  SERVICE(new Pair<Integer, String>(4, "Услуга")),
-  PAYMENT(new Pair<Integer, String>(10, "Платеж/Выплата"));
+  GOODS(new Pair<>(1, "Товар")),
+  SERVICE(new Pair<>(4, "Услуга")),
+  PAYMENT(new Pair<>(10, "Платеж/Выплата"));
 
   private Pair<Integer, String> value;
 

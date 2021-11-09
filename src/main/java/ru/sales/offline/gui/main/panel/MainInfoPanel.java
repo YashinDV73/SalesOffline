@@ -2,6 +2,9 @@ package ru.sales.offline.gui.main.panel;
 
 import lombok.var;
 import net.miginfocom.swing.MigLayout;
+import ru.sales.offline.bussines.PreparationReceiptData;
+import ru.sales.offline.bussines.ReceiptTransaction;
+import ru.sales.offline.bussines.fiscal.PrintAndSaveReceipt;
 import ru.sales.offline.context.ApplicationContext;
 
 import javax.swing.*;
@@ -14,7 +17,8 @@ public class MainInfoPanel extends JPanel {
   public MainInfoPanel(ApplicationContext applicationContext) {
     this.applicationContext = applicationContext;
 
-    setLayout(new MigLayout("debug, fillx", "[grow, right]"));
+    // debug,
+    setLayout(new MigLayout("fillx", "[grow, right]"));
 
     JPanel sumInfoPanel = new JPanel();
     sumInfoPanel.add(new JLabel("Сумма к оплате наличными: "));
@@ -24,19 +28,15 @@ public class MainInfoPanel extends JPanel {
     JPanel buttonPanel = new JPanel();
     JButton addPosition = new JButton("Добавить позицию");
     addPosition.setAlignmentX(Component.RIGHT_ALIGNMENT);
-    addPosition.addActionListener(e -> {});
 
     JButton delPosition = new JButton("Удалить позицию");
     delPosition.setAlignmentX(Component.RIGHT_ALIGNMENT);
-    delPosition.addActionListener(e -> {});
 
     JButton clearSpecification = new JButton("Очистить спецификацию");
     clearSpecification.setAlignmentX(Component.RIGHT_ALIGNMENT);
-    clearSpecification.addActionListener(e -> {});
 
     JButton printReceipt = new JButton("Оформить чек");
     printReceipt.setAlignmentX(Component.RIGHT_ALIGNMENT);
-    printReceipt.addActionListener(e -> {});
 
     buttonPanel.add(addPosition);
     buttonPanel.add(delPosition);
@@ -50,10 +50,19 @@ public class MainInfoPanel extends JPanel {
 
     clearSpecification.addActionListener(e -> clearSpecificationAction(e.getSource()));
 
-    printReceipt.addActionListener(e -> printReceipt(applicationContext));
+    printReceipt.addActionListener(e -> printReceiptAndSave(applicationContext));
   }
 
-  private void printReceipt(ApplicationContext applicationContext) {}
+  private void printReceiptAndSave(ApplicationContext applicationContext) {
+    PrintAndSaveReceipt printAndSaveReceipt = new PrintAndSaveReceipt(applicationContext);
+    PreparationReceiptData preparationReceiptData = new PreparationReceiptData(applicationContext);
+    if (preparationReceiptData.validate()) {
+      if (printAndSaveReceipt.action()) {
+        new ReceiptTransaction(applicationContext).saveReceipt();
+        applicationContext.getMainTable().clearSpecification();
+      }
+    }
+  }
 
   private void clearSpecificationAction(Object source) {
     applicationContext.getMainTable().clearSpecification();

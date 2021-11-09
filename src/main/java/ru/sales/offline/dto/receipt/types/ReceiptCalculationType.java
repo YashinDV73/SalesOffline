@@ -7,8 +7,8 @@ import lombok.AllArgsConstructor;
 public enum ReceiptCalculationType implements ComboType {
   INCOME(new Pair<>(1, "приход")),
   INCOME_RETURN(new Pair<>(2, "возврат прихода")),
-  SPENDING(new Pair<>(3, "расход")),
-  SPENDING_RETURN(new Pair<>(4, "возврат расхода"));
+  SPENDING(new Pair<>(7, "расход")),
+  SPENDING_RETURN(new Pair<>(8, "возврат расхода"));
 
   private Pair<Integer, String> value;
 

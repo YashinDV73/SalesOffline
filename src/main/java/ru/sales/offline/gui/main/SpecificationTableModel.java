@@ -2,9 +2,11 @@ package ru.sales.offline.gui.main;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.sales.offline.SalesOfflineApplication;
 import ru.sales.offline.context.ApplicationContext;
 import ru.sales.offline.dto.receipt.Position;
 import ru.sales.offline.dto.receipt.Specification;
@@ -17,11 +19,12 @@ import ru.sales.offline.gui.model.TableModel;
 
 import javax.swing.table.DefaultTableModel;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Comparator;
 
-@Slf4j
 public class SpecificationTableModel extends DefaultTableModel {
 
+  private static final Logger logger = LoggerFactory.getLogger(SalesOfflineApplication.class);
   @Getter private final TableModel model = new MainTableModel();
 
   private ApplicationContext applicationContext;
@@ -36,7 +39,7 @@ public class SpecificationTableModel extends DefaultTableModel {
 
     addTableModelListener(
         e -> {
-          log.info("addTableModelListener: {}", e.getSource());
+          logger.info("addTableModelListener: {}", e.getSource());
           recalcSum();
         });
   }
@@ -78,7 +81,7 @@ public class SpecificationTableModel extends DefaultTableModel {
   public void setValueAt(Object aValue, int row, int column) {
     if (aValue == null) {
       super.setValueAt(aValue, row, column);
-      log.error("Попытка вставить в таблицу NULL! строка: {} колонка: {}", row, column);
+      logger.error("Попытка вставить в таблицу NULL! строка: {} колонка: {}", row, column);
     }
     switch (column) {
       case MainTableModel.COLUMN_NAME:
@@ -86,11 +89,17 @@ public class SpecificationTableModel extends DefaultTableModel {
         break;
       case MainTableModel.COLUMN_QTY:
         updateSpecification(row).setQty((Integer) aValue);
-        setValueAt((Integer) aValue * (Double) getValueAt(row, MainTableModel.COLUMN_COST), row, MainTableModel.COLUMN_SUM);
+        setValueAt(
+            (Integer) aValue * (Double) getValueAt(row, MainTableModel.COLUMN_COST),
+            row,
+            MainTableModel.COLUMN_SUM);
         break;
       case MainTableModel.COLUMN_COST:
         updateSpecification(row).setCost((Double) aValue);
-        setValueAt((Double) aValue * (Integer) getValueAt(row, MainTableModel.COLUMN_QTY), row, MainTableModel.COLUMN_SUM);
+        setValueAt(
+            (Double) aValue * (Integer) getValueAt(row, MainTableModel.COLUMN_QTY),
+            row,
+            MainTableModel.COLUMN_SUM);
         break;
       case MainTableModel.COLUMN_NDS:
         updateSpecification(row).setNds((NdsType) aValue);
@@ -103,8 +112,8 @@ public class SpecificationTableModel extends DefaultTableModel {
         break;
     }
     super.setValueAt(aValue, row, column);
-    log.info("setValueAt: {}, {}, {}", aValue, row, column);
-    log.info("specification: {}", new ObjectMapper().writeValueAsString(specification));
+    logger.info("setValueAt: {}, {}, {}", Arrays.asList(aValue, row, column).toArray());
+    logger.info("specification: {}", new ObjectMapper().writeValueAsString(specification));
   }
 
   private Position updateSpecification(int row) {

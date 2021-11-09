@@ -34,8 +34,9 @@ public class MainApplicationForm extends JDialog {
           }
         });
 
-    JPanel panel = new JPanel(new MigLayout("debug, fillx", "[grow]"));
-    panel.add(new MainTopPanel(), "wrap");
+    // debug, fillx
+    JPanel panel = new JPanel(new MigLayout("fillx", "[grow]"));
+    panel.add(new MainTopPanel(applicationContext.getRendererComboBoxReceiptType()), "wrap");
 
     SpecificationTable table = new SpecificationTable(applicationContext);
     applicationContext.setMainTable(table);
@@ -55,6 +56,7 @@ public class MainApplicationForm extends JDialog {
     setContentPane(panel);
     setSize(1024, 768);
     GuiUtils.changeFont(this, new Font("Arial", 0, 18));
+    applicationContext.setParent(this);
     pack();
     setVisible(true);
   }
